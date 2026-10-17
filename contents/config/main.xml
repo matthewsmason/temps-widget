@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0 http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+  <kcfgfile name=""/>
+  <group name="General">
+    <!-- Orange (warn) and red (hot) thresholds, °C -->
+    <entry name="cpuWarn" type="Int"><default>90</default></entry>
+    <entry name="cpuHot" type="Int"><default>95</default></entry>
+    <entry name="gpuWarn" type="Int"><default>80</default></entry>
+    <entry name="gpuHot" type="Int"><default>90</default></entry>
+    <!-- Line/number colors; empty = automatic (adapts to light/dark theme) -->
+    <entry name="cpuColor" type="String"><default></default></entry>
+    <entry name="gpuColor" type="String"><default></default></entry>
+    <!-- Game sessions shorter than this aren't saved (quick launches, settings tweaks), minutes; 0 = keep all -->
+    <entry name="minSessionMinutes" type="Int"><default>5</default></entry>
+    <!-- The pump/fan speed row under the temperature cards -->
+    <entry name="showFans" type="Bool"><default>true</default></entry>
+    <!-- How often temperatures are read, seconds (1–10) -->
+    <entry name="updateSeconds" type="Int"><default>2</default></entry>
+    <!-- Set by the settings page's Clear Data… button: "games,history:<timestamp>". The widget acts once per new value. -->
+    <entry name="clearRequest" type="String"><default></default></entry>
+    <!-- Legacy: game log from before games.json; only read once to migrate -->
+    <entry name="gameLog" type="String"><default>{}</default></entry>
+  </group>
+</kcfg>

@@ -1,0 +1,13 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [{ "Name": "Matthew Mason" }],
+        "Category": "System Information",
+        "Description": "CPU and GPU temperatures with a session history graph",
+        "Icon": "temperature-normal",
+        "Id": "blog.matthewmason.temps",
+        "Name": "Temps",
+        "Version": "1.0"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}
