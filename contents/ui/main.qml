@@ -126,8 +126,6 @@ PlasmoidItem {
     property var gpuHots: []            // GPU hotspot °C and power W, same indexes as times
     property var gpuPowers: []
     property int revision: 0
-    // Where the graph's data starts: its oldest kept sample (at most 24 hours ago), or now when it's empty
-    readonly property double recordingSince: { revision; return times.length ? times[0] : Date.now() }
     property var stats: freshStats()
     property double lastSample: 0
 

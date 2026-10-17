@@ -297,39 +297,6 @@ PlasmaExtras.Representation {
             }
         }
 
-        // Pump and fan speeds, live, centered under the cards (hidden when the fan chip can't be read,
-        // e.g. nct6775 not loaded)
-        PlasmaComponents.Label {
-            readonly property var parts: {
-                const muted = Qt.alpha(Kirigami.Theme.textColor, 0.6)
-                const n = v => `<b>${Number(v).toLocaleString(Qt.locale(), "f", 0)}</b> <font color="${muted}">rpm</font>`
-                const out = []
-                // Turned off in settings: only a stopped pump still shows (it's a warning, not a reading)
-                if (!(root.cfg.showFans ?? true))
-                    return root.pumpRpm !== null && root.pumpRpm < 300 ? [`<font color="${root.hotColor}"><b>Pump stopped</b></font>`] : []
-                // A stopped pump on a running PC is worth shouting about
-                if (root.pumpRpm !== null)
-                    out.push(root.pumpRpm < 300 ? `<font color="${root.hotColor}"><b>Pump stopped</b></font>`
-                                                : `<font color="${muted}">Pump</font> ${n(root.pumpRpm)}`)
-                if (root.radiatorRpm !== null) out.push(`<font color="${muted}">Radiator</font> ${n(root.radiatorRpm)}`)
-                if (root.caseFanRpm !== null) out.push(`<font color="${muted}">Case</font> ${n(root.caseFanRpm)}`)
-                if (root.chipsetFanRpm !== null) out.push(`<font color="${muted}">Chipset</font> ${n(root.chipsetFanRpm)}`)
-                if (root.gpuFanRpm !== null)
-                    out.push(`<font color="${muted}">GPU fan</font> ` + (root.gpuFanRpm === 0 ? "<b>off</b>" : n(root.gpuFanRpm)))
-                return out
-            }
-            visible: parts.length > 0 && (root.pumpRpm !== null || root.radiatorRpm !== null || root.caseFanRpm !== null || root.chipsetFanRpm !== null)
-            Layout.fillWidth: true
-            Layout.leftMargin: full.sideMargin
-            Layout.rightMargin: full.sideMargin
-            horizontalAlignment: Text.AlignHCenter
-            textFormat: Text.StyledText
-            font.pointSize: Kirigami.Theme.smallFont.pointSize
-            font.features: { "tnum": 1 }
-            wrapMode: Text.WordWrap
-            text: parts.join(`&nbsp;&nbsp;<font color="${Qt.alpha(Kirigami.Theme.textColor, 0.35)}">·</font>&nbsp;&nbsp;`)
-        }
-
         // Activity button on the left, segmented range picker on the right
         RowLayout {
             Layout.fillWidth: true
@@ -387,20 +354,39 @@ PlasmaExtras.Representation {
             }
         }
 
+        // Pump and fan speeds, live, centered under the graph (hidden when the fan chip can't be read,
+        // e.g. nct6775 not loaded)
         PlasmaComponents.Label {
-            Layout.fillWidth: true
-            horizontalAlignment: Text.AlignHCenter
-            font: Kirigami.Theme.smallFont
-            opacity: 0.55
-            text: {
-                const d = new Date(root.recordingSince), today = new Date()
-                const time = d.toLocaleTimeString(Qt.locale(), Locale.ShortFormat)
-                const yesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1)
-                const day = d.toDateString() === today.toDateString() ? ""
-                    : d.toDateString() === yesterday.toDateString() ? "yesterday " : d.toLocaleDateString(Qt.locale(), "MMM d") + " "
-                return `Recording since ${day}${time} · keeps the last 24 hours`
+            readonly property var parts: {
+                const muted = Qt.alpha(Kirigami.Theme.textColor, 0.6)
+                const n = v => `<b>${Number(v).toLocaleString(Qt.locale(), "f", 0)}</b>&nbsp;<font color="${muted}">rpm</font>`
+                const out = []
+                // &nbsp; inside each reading so a narrow popup wraps between readings, never inside one
+                // Turned off in settings: only a stopped pump still shows (it's a warning, not a reading)
+                if (!(root.cfg.showFans ?? true))
+                    return root.pumpRpm !== null && root.pumpRpm < 300 ? [`<font color="${root.hotColor}"><b>Pump stopped</b></font>`] : []
+                // A stopped pump on a running PC is worth shouting about
+                if (root.pumpRpm !== null)
+                    out.push(root.pumpRpm < 300 ? `<font color="${root.hotColor}"><b>Pump stopped</b></font>`
+                                                : `<font color="${muted}">Pump</font>&nbsp;${n(root.pumpRpm)}`)
+                if (root.radiatorRpm !== null) out.push(`<font color="${muted}">Radiator</font>&nbsp;${n(root.radiatorRpm)}`)
+                if (root.caseFanRpm !== null) out.push(`<font color="${muted}">Case</font>&nbsp;${n(root.caseFanRpm)}`)
+                if (root.chipsetFanRpm !== null) out.push(`<font color="${muted}">Chipset</font>&nbsp;${n(root.chipsetFanRpm)}`)
+                if (root.gpuFanRpm !== null)
+                    out.push(`<font color="${muted}">GPU&nbsp;fan</font>&nbsp;` + (root.gpuFanRpm === 0 ? "<b>off</b>" : n(root.gpuFanRpm)))
+                return out
             }
+            visible: parts.length > 0 && (root.pumpRpm !== null || root.radiatorRpm !== null || root.caseFanRpm !== null || root.chipsetFanRpm !== null)
+            Layout.fillWidth: true
+            Layout.leftMargin: full.sideMargin
+            Layout.rightMargin: full.sideMargin
+            Layout.bottomMargin: Kirigami.Units.largeSpacing
+            horizontalAlignment: Text.AlignHCenter
+            textFormat: Text.StyledText
+            font.pointSize: Kirigami.Theme.smallFont.pointSize
+            font.features: { "tnum": 1 }
             wrapMode: Text.WordWrap
+            text: parts.join(`&nbsp;&nbsp;<font color="${Qt.alpha(Kirigami.Theme.textColor, 0.35)}">·</font>&nbsp; `)   // the plain space is the only wrap point
         }
     }
 

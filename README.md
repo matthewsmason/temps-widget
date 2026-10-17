@@ -4,7 +4,7 @@ A KDE Plasma 6 panel widget that shows your CPU and GPU temperatures, keeps a gr
 
 > **Personal project.** I built this for my own PC and use it myself. It isn't packaged or supported for anyone else. Parts of it, like the fan sensors, are set up for my hardware. You're welcome to look around or try it, but expect to adjust things, and I may not answer issues or pull requests.
 
-![Temps popup with CPU and GPU cards and the temperature graph](screenshots/overview.png)
+![Temps popup with CPU and GPU cards, the temperature graph, and pump and fan speeds](screenshots/overview.png)
 
 ## Features
 
@@ -13,7 +13,7 @@ A KDE Plasma 6 panel widget that shows your CPU and GPU temperatures, keeps a gr
 The panel shows two colored numbers, CPU and GPU (or the game's icon while you're playing). Click them to open the popup, which shows:
 
 - A card for each device with the current temperature, current usage, and the low, high, time spent at the hot threshold and longest stretch there. The GPU card also shows power draw and hotspot (junction) temperature.
-- A row with pump and fan speeds, if your motherboard's sensor chip is readable.
+- A row under the graph with pump and fan speeds, if your motherboard's sensor chip is readable.
 - A strip at the top with the game you're playing, or the last one you played, with average and peak temperatures and usage.
 
 ### A 24-hour graph
