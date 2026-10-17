@@ -91,12 +91,12 @@ PlasmoidItem {
     // ---- Pump and fan speeds (rpm), live only ----
     // From the motherboard's NCT6799 fan chip (needs the nct6775 driver; without it these read nothing and the
     // row hides). Headers found by testing on 2026-10-13: fan7 = AIO pump, fan1 + fan2 = radiator fans,
-    // fan6 = unidentified small fan. GPU fan from amdgpu (0 rpm = its idle fan-stop).
+    // fan6 = chipset fan (on the motherboard). GPU fan from amdgpu (0 rpm = its idle fan-stop).
     readonly property string fanChip: "lmsensors/nct6799-isa-0290/"
     Sensors.Sensor { id: pumpSensor; sensorId: root.fanChip + "fan7"; updateRateLimit: root.sampleMs }
     Sensors.Sensor { id: radFan1Sensor; sensorId: root.fanChip + "fan1"; updateRateLimit: root.sampleMs }
     Sensors.Sensor { id: radFan2Sensor; sensorId: root.fanChip + "fan2"; updateRateLimit: root.sampleMs }
-    Sensors.Sensor { id: otherFanSensor; sensorId: root.fanChip + "fan6"; updateRateLimit: root.sampleMs }
+    Sensors.Sensor { id: chipsetFanSensor; sensorId: root.fanChip + "fan6"; updateRateLimit: root.sampleMs }
     Sensors.Sensor { id: gpuFanSensor; sensorId: "gpu/gpu0/fan1"; updateRateLimit: root.sampleMs }
     function rpm(sensor) { return typeof sensor.value === "number" && sensor.value >= 0 ? Math.round(sensor.value) : null }
     readonly property var pumpRpm: demo ? 2750 : rpm(pumpSensor)
@@ -105,7 +105,7 @@ PlasmoidItem {
         const a = rpm(radFan1Sensor), b = rpm(radFan2Sensor)
         return a === null ? b : b === null ? a : Math.round((a + b) / 2)
     }
-    readonly property var otherFanRpm: demo ? 2080 : rpm(otherFanSensor)
+    readonly property var chipsetFanRpm: demo ? 2080 : rpm(chipsetFanSensor)
     readonly property var gpuFanRpm: demo ? 0 : rpm(gpuFanSensor)
     // Recorded as whole percent (null = no reading)
     function usageNum(v) { return typeof v === "number" && v >= 0 ? Math.round(Math.min(100, v)) : null }

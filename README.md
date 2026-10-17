@@ -87,7 +87,7 @@ Saved games and history are kept in `~/.local/share/temperature-monitor/`. Delet
 
 ## Fan speeds
 
-The fan row reads an `nct6799` chip (common on recent ASUS boards), and is wired to one specific motherboard: `fan7` is the AIO pump, `fan1` and `fan2` are averaged as the radiator fans, and `fan6` is shown as "Fan". If your board uses a different chip or fan headers, change `fanChip` and the fan sensor names in `contents/ui/main.qml`. The row hides itself when the sensors can't be read.
+The fan row reads an `nct6799` chip (common on recent ASUS boards), and is wired to one specific motherboard: `fan7` is the AIO pump, `fan1` and `fan2` are averaged as the radiator fans, and `fan6` is the chipset fan. If your board uses a different chip or fan headers, change `fanChip` and the fan sensor names in `contents/ui/main.qml`. The row hides itself when the sensors can't be read.
 
 On many boards the chip needs the `nct6775` kernel driver:
 
