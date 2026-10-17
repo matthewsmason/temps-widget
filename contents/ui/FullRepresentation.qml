@@ -312,12 +312,13 @@ PlasmaExtras.Representation {
                     out.push(root.pumpRpm < 300 ? `<font color="${root.hotColor}"><b>Pump stopped</b></font>`
                                                 : `<font color="${muted}">Pump</font> ${n(root.pumpRpm)}`)
                 if (root.radiatorRpm !== null) out.push(`<font color="${muted}">Radiator</font> ${n(root.radiatorRpm)}`)
+                if (root.caseFanRpm !== null) out.push(`<font color="${muted}">Case</font> ${n(root.caseFanRpm)}`)
                 if (root.chipsetFanRpm !== null) out.push(`<font color="${muted}">Chipset</font> ${n(root.chipsetFanRpm)}`)
                 if (root.gpuFanRpm !== null)
                     out.push(`<font color="${muted}">GPU fan</font> ` + (root.gpuFanRpm === 0 ? "<b>off</b>" : n(root.gpuFanRpm)))
                 return out
             }
-            visible: parts.length > 0 && (root.pumpRpm !== null || root.radiatorRpm !== null || root.chipsetFanRpm !== null)
+            visible: parts.length > 0 && (root.pumpRpm !== null || root.radiatorRpm !== null || root.caseFanRpm !== null || root.chipsetFanRpm !== null)
             Layout.fillWidth: true
             Layout.leftMargin: full.sideMargin
             Layout.rightMargin: full.sideMargin
